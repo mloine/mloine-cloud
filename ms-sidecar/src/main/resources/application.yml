@@ -1,0 +1,37 @@
+server:
+  port: 8070
+
+spring:
+  application:
+    name: sidecar
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        health-check-path: /actuator/health
+        # 设置spring cloud 元数据
+        tags: JIFANG=NJ,c=d,e=f
+        # ip 注册 服务地址信息
+        prefer-ip-address: true
+        # 指定 instance-id 生成规则
+        instance-id: ${spring.application.name}-${server.port}-${spring.cloud.client.ip-address}
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+sidecar:
+  ## 指定异构微服务的 ip
+  ip: 127.0.0.1
+  ## 异构微服务的端口
+  port: 8086
+  health-check-url: http://localhost:8060/health.json
