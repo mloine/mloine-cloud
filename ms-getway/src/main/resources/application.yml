@@ -1,0 +1,68 @@
+server:
+  port: 8040
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: ms-getway
+  zipkin:
+    # 制定zipkin server的地址
+    base-url: http://localhost:9411
+    # 用什么类型上报数据
+    # web 表示http
+    # 有一个小坑
+    sender:
+      type: web
+    discovery-client-enabled: false
+  sleuth:
+    sampler:
+      # 配置数据的采样率 默认值 0.1 （10%）
+      probability: 1.0
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        health-check-path: /actuator/health
+        # 设置spring cloud 元数据
+        tags: JIFANG=NJ
+        # ip 注册 服务地址信息
+        prefer-ip-address: true
+        # 指定 instance-id 生成规则
+        instance-id: ${spring.application.name}-${server.port}-${spring.cloud.client.ip-address}
+    gateway:
+      discovery:
+        locator:
+          # 让getway从服务发现组件找到微服务，并反向代理
+          enabled: true
+      routes:
+        - id: after_route
+          uri: lb://ms-user
+          predicates:
+            # 当且仅当请求时的时间After配置的时间时，才会转发到用户微服务
+            # 目前配置不会进该路由配置，所以返回404
+            # 将时间改成 < now的时间，则访问localhost:8040/** -> ms-user/**
+            # eg. 访问http://localhost:8040/users/1 -> ms-user/users/1
+            - After=2010-01-20T17:42:47.789-07:00[America/Denver]
+            - TimeBetween=上午00:00,下午11:59
+          filters:
+            - AddRequestHeader=X-Request-Foo, Bar
+            - MyLog=aaa,bbb
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+        #include: 'gateway'
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    org.springframework.cloud.gateway: trace
+    org.springframework.http.server.reactive: debug
+    org.springframework.web.reactive: debug
+    reactor.ipc.netty: debug
+

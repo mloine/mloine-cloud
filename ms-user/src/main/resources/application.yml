@@ -1,0 +1,87 @@
+server:
+  port: 8081
+
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  datasource:
+    url: jdbc:mysql://localhost:3306/ms_user?useUnicode=true&useSSL=true&serverTimezone=UTC
+    password: 123456
+    username: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    consul:
+      discovery:
+        # 健康检查路径
+        health-check-path: /actuator/health
+        # 设置spring cloud 元数据信息
+        tags: JIFANG=NJ,c=d,e
+        # ip 注册 服务地址信息
+        prefer-ip-address: true
+        # 指定 instance-id 生成规则
+        instance-id: ${spring.application.name}-${server.port}-${spring.cloud.client.ip-address}
+    stream:
+      bindings:
+        input:
+          # 指定 topic
+          destination: lesson-buy
+          # 对于同一条消息 相同group下只会有一个实例消费 负载均很算法是轮询
+          group: g1
+        myInput:
+          destination: stream-test2
+          group: g2
+  zipkin:
+    # 制定zipkin server的地址
+    base-url: http://localhost:9411
+    # 用什么类型上报数据
+    # web 表示http
+    # 有一个小坑
+    sender:
+      type: web
+    discovery-client-enabled: false
+  sleuth:
+    sampler:
+      # 配置数据的采样率 默认值 0.1 （10%）
+      probability: 1.0
+  profiles:
+    active: dev
+
+# actuator 相关辅助配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+jwt:
+  secret: mloinemloinemloinemloinemloinemloinemloinemloinemloinemloinemloinemloinemloinemloine
+  # 有效期，单位秒，默认2周
+  expire-time-in-second: 1209600
+
+#通用配置
+logging:
+  level:
+    org.springframefork.web: debug
+---
+# profile=x的专用配置
+spring:
+  profiles: dev
+  jpa:
+    show-sql: true
+---
+# profile=y的专用配置
+spring:
+  profiles: prod
+  jpa:
+    show-sql: false

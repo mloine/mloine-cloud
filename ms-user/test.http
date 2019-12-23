@@ -1,0 +1,37 @@
+POST http://localhost:8081/login
+Content-Type: application/json
+
+{"userName": "mloine",
+  "password": "123456"}
+
+### eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6Im1sb2luZSIsInVzZXJJZCI6MSwiaWF0IjoxNTc2ODI3MzUwLCJleHAiOjE1NzgwMzY5NTB9.YG9-7sfcZM_onlZRVlIWKThD0u3led9xp56oSTAT0Lo
+GET http://localhost:8081/users/1
+Accept: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6Im1sb2luZSIsInVzZXJJZCI6MSwiaWF0IjoxNTc2ODQ5OTY0LCJleHAiOjE1NzgwNTk1NjR9.WTfSOduv_k61RogX4ZQpCQqyBsDKuo45MnmY-w6Gqk4
+
+###
+GET http://localhost:8010/lessions/buy/1
+Accept: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6Im1sb2luZSIsInVzZXJJZCI6MSwiaWF0IjoxNTc2ODQ5OTY0LCJleHAiOjE1NzgwNTk1NjR9.WTfSOduv_k61RogX4ZQpCQqyBsDKuo45MnmY-w6Gqk4
+
+###
+GET http://localhost:8081/actuator
+Accept: application/json
+
+###  利用网关代理课程微服务的端点
+GET http://localhost:8040/ms-class/lessions/buy/1
+Accept: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidmlwIiwidXNlck5hbWUiOiJtbG9pbmUiLCJ1c2VySWQiOjEsImlhdCI6MTU3NzA3OTg3OCwiZXhwIjoxNTc4Mjg5NDc4fQ.LKOAzPVztau77KZnJgZDFT8JaOpEzN7LU47p34nzS24
+
+### STORAGE_TYPE=elasticsearch ES_HOSTS=localhost:9200 java -jar zipkin.jar
+### curl -sSL https://zipkin.io/quickstart.sh | bash -s io.zipkin.dependencies:zipkin-dependendencies:LATEST zipkin-dependencies.jar
+
+## 利用网关代理用户微服务 的login端点
+POST http://localhost:8040/ms-user/login
+Content-Type: application/json
+
+{"userName": "mloine",
+  "password": "123456"}
+
+###
+

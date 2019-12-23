@@ -1,0 +1,15 @@
+# bootstrap 上下文 是springAplicationContext的父级上下文
+spring:
+  application:
+    name: ms-user
+  cloud:
+    consul:
+      #host: 111.229.15.147
+      host: 127.0.0.1
+      port: 8500
+      # consul 配置文件中心
+      config:
+        # 配置文件类型
+        format: files
+  profiles:
+    active: dev

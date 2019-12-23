@@ -1,0 +1,141 @@
+server:
+  port: 8010
+
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  datasource:
+    password: 123456
+    username: root
+    url: jdbc:mysql://localhost:3306/ms_class?useUnicode=true&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      # 不操作表结构
+      ddl-auto: none
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: ms-class
+  zipkin:
+    # 制定zipkin server的地址
+    base-url: http://localhost:9411
+    # 用什么类型上报数据
+    # web 表示http
+    # 有一个小坑
+    sender:
+      type: web
+    discovery-client-enabled: false
+  sleuth:
+    sampler:
+      # 配置数据的采样率 默认值 0.1 （10%）
+      probability: 1.0
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        health-check-path: /actuator/health
+        # 设置spring cloud 元数据
+        tags: JIFANG=NJ,c=d,e=f
+        # ip 注册 服务地址信息
+        prefer-ip-address: true
+        # 指定 instance-id 生成规则
+        instance-id: ${spring.application.name}-${server.port}-${spring.cloud.client.ip-address}
+    stream:
+      bindings:
+        output:
+          destination: lesson-buy
+        myOutPut:
+          destination: stream-test2
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+
+#ms-user:
+#    ribbon:
+#      NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+#ms-user:
+#  ribbon:
+#    ServerListRefreshInterval: 5000
+#ji饿加载
+ribbon:
+  eager-load:
+    enabled: true
+    clients: ms-user
+
+#通用配置 test
+logging:
+  level:
+    com.mloine.msclass.feign.MsUserFeignClient: debug
+#feign:
+#  client:
+#    config:
+#      ms-user:
+#        loggerLevel: full
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: full
+        requestInterceptors:
+          - com.mloine.msclass.feign.MyHeaderRequestInterceptor
+  httpclient:
+    # 让feign使用apache httpclient 而不是默认的client.Default
+    enabled: true
+    # feign 连接池最大连接数量
+    max-connections: 200
+    # feign 单个路径的最大连接数
+    max-connections-per-route: 50
+#resilience4j:
+#  ratelimiter:
+#    configs:
+#      default:
+#        # 再刷新周期内 请求的最大频次
+#        limitForPeriod: 1
+#        # 刷新周期
+#        limitRefreshPeriod: 1s
+#        # 线程等待许可的时间
+#        timeoutDuration: 0
+#      share:
+#        limitForPeriod: 2
+#    instances:
+#      findById:
+#        # 再刷新周期内 请求的最大频次
+#        baseConfig: share
+#        # 刷新周期
+#        limitRefreshPeriod: 1s
+#  bulkhead:
+#    instances:
+#      findById:
+#        # 最大请求数
+#        maxConcurrentCalls: 1
+
+
+jwt:
+  secret: mloinemloinemloinemloinemloinemloinemloinemloinemloinemloinemloinemloinemloinemloine
+  # 有效期，单位秒，默认2周
+  expire-time-in-second: 1209600
+---
+# profile=x的专用配置
+spring:
+  profiles: dev
+  jpa:
+    show-sql: true
+---
+# profile=y的专用配置
+spring:
+  profiles: prod
+  jpa:
+    show-sql: false
+
+

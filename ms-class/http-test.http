@@ -1,0 +1,22 @@
+#### restTemplete基于exchange() 实现token传递测试
+GET http://localhost:8010/test-token-relay
+Accept: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6Im1sb2luZSIsInVzZXJJZCI6MSwiaWF0IjoxNTc2ODQ5OTY0LCJleHAiOjE1NzgwNTk1NjR9.WTfSOduv_k61RogX4ZQpCQqyBsDKuo45MnmY-w6Gqk4
+
+### restTemplete 基于拦截器实现token传递
+GET http://localhost:8010/test-token-relay2
+Accept: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6Im1sb2luZSIsInVzZXJJZCI6MSwiaWF0IjoxNTc2ODQ5OTY0LCJleHAiOjE1NzgwNTk1NjR9.WTfSOduv_k61RogX4ZQpCQqyBsDKuo45MnmY-w6Gqk4
+
+
+### 用户使用user角色 访问
+GET http://localhost:8010/vip
+Accept: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidXNlciIsInVzZXJOYW1lIjoibWxvaW5lIiwidXNlcklkIjoxLCJpYXQiOjE1NzY4NTI2NzQsImV4cCI6MTU3ODA2MjI3NH0.FVOEg9-0P_GGQYy7zDF5uDfcCiZXuc3cE8YnNUXvI04
+
+### 用户使用vip角色访问
+GET http://localhost:8010/vip
+Accept: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidmlwIiwidXNlck5hbWUiOiJtbG9pbmUiLCJ1c2VySWQiOjEsImlhdCI6MTU3Njg1Mjc5MywiZXhwIjoxNTc4MDYyMzkzfQ.Bkc8gLqrw0fAIQM-Ce-jAcyRnpRxnGE2A8wIUEOAmPg
+
+###

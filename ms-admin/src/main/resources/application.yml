@@ -1,0 +1,17 @@
+server:
+  port: 8090
+spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        # \u8BBE\u7F6Espring cloud\u7684\u5143\u6570\u636E
+        tags: JIFANG=NJ
+        instance-id: ${spring.application.name}-${server.port}-${spring.cloud.client.hostname}
+  application:
+    name: spring-boot-admin-server
+  boot:
+    admin:
+      discovery:
+        ignored-services: consul
