@@ -1,12 +1,9 @@
 package com.mloine.msclass;
 
-import com.mloine.msclass.feign.GlobalFeginClientConfiguretion;
 import com.mloine.msclass.rabbit.MySource;
 import com.mloine.msclass.resttemplte.TokenRelayRequestInterceptor;
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.stream.annotation.EnableBinding;

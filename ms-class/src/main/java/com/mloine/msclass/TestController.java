@@ -138,6 +138,23 @@ public class TestController {
 
     }
 
+    @GetMapping("/test-sidecar")
+    public String testSidecar(){
+        // http://localhost:8060
+      return  this.restTemplate.getForObject(
+                "http://sidecar",
+                String.class
+        );
+    }
+
+    @GetMapping("/test-sidecar1")
+    public String testSidecar1(){
+        // http://localhost:8060
+        return  this.restTemplate.getForObject(
+                "http://localhost:8060",
+                String.class
+        );
+    }
 
 
 }

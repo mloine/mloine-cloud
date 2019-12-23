@@ -34,4 +34,10 @@ Content-Type: application/json
   "password": "123456"}
 
 ###
+###  利用sidecar代理nodejs服务 请求路由网理课程微服务的端点
+GET http://localhost:8070/ms-class/lessions/buy/1
+Accept: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidmlwIiwidXNlck5hbWUiOiJtbG9pbmUiLCJ1c2VySWQiOjEsImlhdCI6MTU3NzA3OTg3OCwiZXhwIjoxNTc4Mjg5NDc4fQ.LKOAzPVztau77KZnJgZDFT8JaOpEzN7LU47p34nzS24
+
+###
 
